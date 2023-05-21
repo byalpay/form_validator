@@ -3,12 +3,16 @@ const username = document.getElementById('username');
 const email = document.getElementById('email');
 const password = document.getElementById('password');
 const repassword = document.getElementById('repassword');
+let numberOfError = 0;
+const erroralert = document.getElementById('erroralert');
 
 function error(input, message) {
     input.className = 'form-control is-invalid';
     const div = input.nextElementSibling;
     div.innerText = message;
     div.className = 'invalid-feedback';
+    numberOfError++;
+
 }
 
 function success(input) {
@@ -59,6 +63,7 @@ function checkPhone(input) {
 
 form.addEventListener('submit', function(e) {
     e.preventDefault();
+    
 
     checkRequired([username,email,password,repassword,phone]);
     checkEmail(email);
@@ -66,4 +71,15 @@ form.addEventListener('submit', function(e) {
     checkLength(password,7,12);
     checkPasswords(password,repassword);
     checkPhone(phone);
+    if(numberOfError<1)
+    {
+        erroralert.className= "alert alert-success" ;
+        erroralert.innerHTML = "Başarıyla kayıt oldunuz";
+    }
+    else{
+        erroralert.className = "alert alert-danger" ;
+        erroralert.innerHTML = "Hatayla karşılaştık";
+    }
+    erroralert.style.display = "block";
+    numberOfError = 0;
 });
